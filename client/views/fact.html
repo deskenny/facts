@@ -1,0 +1,22 @@
+<template name="fact">
+  <li>
+    {{#if completed}}
+ 
+      {{servers.[0].name}} ({{servers.[0].val}})     
+ 
+    {{else}}
+ 
+      {{servers.[0].name}} (
+
+      <form class="form-edit"> 
+        <input name="name" type="text" value="{{val}}">
+        <button type="submit">Submit</button>
+        <a class="cancel" href="#">Cancel</a>
+      </form>
+ 
+      <a href="#" class="finish-fact">Finish</a>
+ 
+      <a href="#" class="delete-fact">Delete</a>
+    {{/if}}
+  </li>
+</template>

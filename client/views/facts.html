@@ -1,0 +1,31 @@
+<template name="facts">
+  <h3>Facts</h3>
+  {{#if isCreatingFact}}
+    <form class="form-create">
+      <select name="serverOne">
+        {{#each servers}}
+          <option value="{{_id}}">{{name}}</option>
+        {{/each}}
+      </select>
+ 
+      vs
+ 
+      <select name="serverTwo">
+        {{#each servers}}
+          <option value="{{_id}}">{{name}}</option>
+        {{/each}}
+      </select>
+ 
+      <button type="submit">Submit</button>
+      <a class="cancel" href="#">Cancel</a>
+    </form>
+  {{else}}
+    <a class="create" href="#">Create</a>
+  {{/if}}
+ 
+  <ul>
+    {{#each facts}}
+      {{> fact}}
+    {{/each}}
+  </ul>
+</template>

@@ -1,0 +1,18 @@
+<template name="servers">
+  <h3>Servers</h3>
+  {{#if isCreatingServer}}
+    <form class="create-server"> 
+      <input name="name" type="text">
+      <button type="submit">Submit</button>
+      <a class="cancel" href="#">Cancel</a>
+    </form>
+  {{else}}
+    <a class="create" href="#">Create</a>
+  {{/if}}
+ 
+  <ul>
+    {{#each servers}}
+      {{> server}}
+    {{/each}}
+  </ul>
+</template>

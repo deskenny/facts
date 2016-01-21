@@ -1,0 +1,19 @@
+<template name="layout">
+  <h1>Globoforce Facts</h1>
+  <style>
+    .active a {color: black;text-decoration: none;border: 1px solid black}
+  </style>
+  {{#if currentUser}}
+    <ul>
+      <li class="{{isActiveRoute regex='facts'}}">
+        <a href="/">Facts</a>
+      </li>
+      <li class="{{isActiveRoute regex='servers'}}">
+        <a href="/servers">Servers</a>
+      </li>
+    </ul>
+  {{/if}}
+ 
+  {{> loginButtons}}
+  {{> yield}}
+</template>
