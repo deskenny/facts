@@ -1,26 +1,27 @@
 Template.nameVal.helpers({
 	 isEditingNameVal: function(){
-    return Session.get('editedNameValId') === this._id;
+    return Session.get('editedNameValId') === this.servername + "-" + this.name;
   }
 });
  
 Template.nameVal.events({
   "click a.edit": function(e, tpl){
     e.preventDefault();
-    Session.set('editedNameValId', this._id);
+    Session.set('editedNameValId', this.servername + "-" + this.name);
   },
  
-  "submit form.form-edit": function(e, tpl){
+  "submit form.update-nameval": function(e, tpl){
     e.preventDefault();
- 
+ 	  var servername = tpl.$('input[name=servername]').val();
     var nameValName = tpl.$('input[name=name]').val();
+    var newValue = tpl.$('input[name=newVal]').val();
     var self = this;
 
     if(nameValName.length){
-      Meteor.call("nameValUpdate", this._id, nameValName, function(error){
+      Meteor.call("nameValUpdate", servername, nameValName, newValue, function(error){
         if(error){
           alert(error.reason);
-          Session.set('editedNameValId', self._id);
+          Session.set('editedNameValId', this.servername + "-" + this.name);
           Tracker.afterFlush(function(){
             tpl.$('input[name=name]').val(nameValName);
             tpl.$('input[name=name]').focus();

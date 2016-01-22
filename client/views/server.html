@@ -7,12 +7,12 @@
         <a class="cancel" href="#">Cancel</a>
       </form>
     {{else}}
-      {{name}} 
+      <div id="servername">{{name}}</div>
       <a href="#" class="edit">edit</a> 
       <a href="#" class="remove"> (x)</a>
     {{/if}}
-  </li>
-  {{#each nameVals}}      
-    {{> nameVals}}
-  {{/each}}
+  </li>  
+    {{#each nameVals}}      
+      {{> nameVals}}
+    {{/each}}  
 </template>

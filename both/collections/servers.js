@@ -14,6 +14,28 @@ Servers.allow({
 });
 
 Meteor.methods({
+
+  nameValUpdate: function(serverName, nameValName, newValue){
+    check(Meteor.userId(), String);
+    check(serverName, String);
+    check(nameValName, String);
+    check(newValue, String);
+    console.log("in name val update");
+    var server = Servers.findOne({name: serverName});
+    console.log("server :" + server + " serverName :" + serverName + " nameValName :" + nameValName + " newValue :" + newValue);
+    if(server){
+      Servers.update({name: serverName}, {$set: {nameValName: newValue}}, function(error){
+      console.log("error - " + error);
+        if(!error){
+          console.log("no error ");
+          return newValue;
+        }
+      });
+    } else {
+      throw new Meteor.Error("nameval-does-not-exist", "This Name Value pair does not exist in the database");
+    };
+  },
+
   serverUpdate: function(serverId, newName){
     check(Meteor.userId(), String);
     check(serverId, String);

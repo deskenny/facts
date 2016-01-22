@@ -1,9 +1,11 @@
 <template name="nameVal">  
 
     {{#if isEditingNameVal}}     
-      <form class="form-edit"> 
+      <form class="update-nameval"> 
       	<label for="name">{{name}}</label>
-        <input name="name" type="text" value="{{value}}">
+        <input name="newVal" type="text" value="{{value}}">
+        <input name="servername" type="hidden" value="{{servername}}">
+        <input name="name" type="hidden" value="{{name}}">
         <button type="submit">Submit</button>
         <a class="cancel" href="#">Cancel</a>
       </form>
