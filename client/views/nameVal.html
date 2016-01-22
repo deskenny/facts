@@ -1,7 +1,18 @@
 <template name="nameVal">  
-  <div>
-    {{#each pair in this.$}}
-      {{pair}}
-    {{/each}}      
-  </div>
+
+    {{#if isEditingNameVal}}     
+      <form class="form-edit"> 
+      	<label for="name">{{name}}</label>
+        <input name="name" type="text" value="{{value}}">
+        <button type="submit">Submit</button>
+        <a class="cancel" href="#">Cancel</a>
+      </form>
+    {{else}}
+    <div>
+      {{name}} : {{value}}
+      <a href="#" class="edit">edit</a> 
+      <a href="#" class="remove"> (x)</a>
+	</div>      
+    {{/if}}
+
 </template>

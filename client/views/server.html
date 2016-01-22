@@ -11,14 +11,8 @@
       <a href="#" class="edit">edit</a> 
       <a href="#" class="remove"> (x)</a>
     {{/if}}
-    <div>
-    Name Value
-  </div>
-    {{#each nameVals}}      
-      {{nameVals.[0]}} {{nameVals.[1]}}
-      {{this.[0]}}
-      {{this.[1]}}
-      {{> nameVal}}
-    {{/each}}
   </li>
+  {{#each nameVals}}      
+    {{> nameVals}}
+  {{/each}}
 </template>
