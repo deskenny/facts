@@ -22,15 +22,24 @@ Meteor.methods({
     check(newValue, String);
     console.log("in name val update");
     var server = Servers.findOne({name: serverName});
+    var serverId = server._id;
     console.log("server :" + server + " serverName :" + serverName + " nameValName :" + nameValName + " newValue :" + newValue);
     if(server){
-      Servers.update({name: serverName}, {$set: {nameValName: newValue}}, function(error){
-      console.log("error - " + error);
-        if(!error){
-          console.log("no error ");
-          return newValue;
-        }
-      });
+      // db.getCollection('servers').update({name:"test-web1-19"}, {$set: { "nameVals.0.ETC_DIR":"/etcd"}});
+      var serverById = Servers.findOne({_id: serverId});
+      if (serverById) {
+        console.log(" serverId:" + serverId);    
+
+        var updateOP = Servers.update(serverId, {$set: { "nameVals.0.ETC_DIR" : newValue }}, function(error){
+          console.log("error:" + error + " updateOP:" + updateOP);
+          if(!error){
+            console.log("no error ");
+            return newValue;
+          }
+        });
+      } else {
+        throw new Meteor.Error("nameval-does-not-exist", "Cannot find the server by Id");
+      }  
     } else {
       throw new Meteor.Error("nameval-does-not-exist", "This Name Value pair does not exist in the database");
     };
