@@ -14,8 +14,7 @@ Servers.allow({
 });
 
 Meteor.methods({
-
-  nameValUpdate: function(serverName, nameValName, newValue){
+  nameValUpdate: function(serverName, nameValName, newValue){    
     check(Meteor.userId(), String);
     check(serverName, String);
     check(nameValName, String);
@@ -30,8 +29,11 @@ Meteor.methods({
       if (serverById) {
         console.log(" serverId:" + serverId);    
 
-        var updateOP = Servers.update(serverId, {$set: { "nameVals.0.ETC_DIR" : newValue }}, function(error){
-          console.log("error:" + error + " updateOP:" + updateOP);
+        var $set = {};
+        $set['nameVals.0.' + nameValName] = newValue;
+
+        Servers.update(serverId, { $set: $set }, function(error){
+          console.log("error:" + error);
           if(!error){
             console.log("no error ");
             return newValue;
@@ -44,7 +46,10 @@ Meteor.methods({
       throw new Meteor.Error("nameval-does-not-exist", "This Name Value pair does not exist in the database");
     };
   },
-
+  oldnameValUpdate: function(serverName, nameValName, newValue){
+    console.log("Calling realnameValUpdate with params of serverName :" + serverName + " nameValName :" + nameValName + " newValue :" + newValue);
+    Meteor.call('realnameValUpdate', serverName, "nameVals.0.ETC_DIR", newValue);
+  },
   serverUpdate: function(serverId, newName){
     check(Meteor.userId(), String);
     check(serverId, String);
