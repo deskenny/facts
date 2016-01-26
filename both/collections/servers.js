@@ -21,34 +21,22 @@ Meteor.methods({
     check(newValue, String);
     console.log("in name val update");
     var server = Servers.findOne({name: serverName});
-    var serverId = server._id;
     console.log("server :" + server + " serverName :" + serverName + " nameValName :" + nameValName + " newValue :" + newValue);
     if(server){
       // db.getCollection('servers').update({name:"test-web1-19"}, {$set: { "nameVals.0.ETC_DIR":"/etcd"}});
-      var serverById = Servers.findOne({_id: serverId});
-      if (serverById) {
-        console.log(" serverId:" + serverId);    
+      var $set = {};
+      $set['nameVals.0.' + nameValName] = newValue;
 
-        var $set = {};
-        $set['nameVals.0.' + nameValName] = newValue;
-
-        Servers.update(serverId, { $set: $set }, function(error){
-          console.log("error:" + error);
-          if(!error){
-            console.log("no error ");
-            return newValue;
-          }
-        });
-      } else {
-        throw new Meteor.Error("nameval-does-not-exist", "Cannot find the server by Id");
-      }  
+      Servers.update({name: serverName}, { $set: $set }, function(error){
+        console.log("error:" + error);
+        if(!error){
+          console.log("no error ");
+          return newValue;
+        }
+      });
     } else {
       throw new Meteor.Error("nameval-does-not-exist", "This Name Value pair does not exist in the database");
     };
-  },
-  oldnameValUpdate: function(serverName, nameValName, newValue){
-    console.log("Calling realnameValUpdate with params of serverName :" + serverName + " nameValName :" + nameValName + " newValue :" + newValue);
-    Meteor.call('realnameValUpdate', serverName, "nameVals.0.ETC_DIR", newValue);
   },
   serverUpdate: function(serverId, newName){
     check(Meteor.userId(), String);
