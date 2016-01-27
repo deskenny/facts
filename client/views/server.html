@@ -7,9 +7,10 @@
         <a class="cancel" href="#">Cancel</a>
       </form>
     {{else}}
-      <div id="servername">{{name}}</div>
-      <a href="#" class="edit">edit</a> 
-      <a href="#" class="remove"> (x)</a>
+      <div id="servername">{{name}}
+        <a href="#" class="edit">edit</a> 
+        <a href="#" class="remove"> (x)</a>
+      </div>
     {{/if}}
   </li>  
     {{#each nameVals}}      
