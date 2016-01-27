@@ -38,9 +38,19 @@ Template.nameVal.events({
     Session.set('editedNameValId', null);
   },
  
-  // 'click a.remove': function(e, tpl){
-  //   e.preventDefault();
-  //   NameVals.remove(this._id);
-  // }
+   'click a.remove': function(e, tpl){
+      e.preventDefault();
+      var self = this;
+      var servername = tpl.data.servername;
+      var nameValName = tpl.data.name;
+
+      if(nameValName.length){
+        Meteor.call("nameValRemove", servername, nameValName, function(error){
+          if(error){
+            alert(error.reason);
+          }
+        });
+      }
+   }
 
 });

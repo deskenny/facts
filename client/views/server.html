@@ -1,5 +1,4 @@
 <template name="server">
-  <li>
     {{#if isEditingServer}}
       <form class="form-edit"> 
         <input name="name" type="text" value="{{name}}">
@@ -7,12 +6,11 @@
         <a class="cancel" href="#">Cancel</a>
       </form>
     {{else}}
-      <div id="servername">{{name}}
+      <div id="servername" class="wallet-balance"><h3>{{name}}
         <a href="#" class="edit">edit</a> 
-        <a href="#" class="remove"> (x)</a>
+        <a href="#" class="remove"> (x)</a></h3>
       </div>
     {{/if}}
-  </li>  
     {{#each nameVals}}      
       {{> nameVals}}
     {{/each}}  

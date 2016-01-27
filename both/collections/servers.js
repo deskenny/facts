@@ -19,9 +19,8 @@ Meteor.methods({
     check(serverName, String);
     check(nameValName, String);
     check(newValue, String);
-    console.log("in name val update");
     var server = Servers.findOne({name: serverName});
-    console.log("server :" + server + " serverName :" + serverName + " nameValName :" + nameValName + " newValue :" + newValue);
+    console.log("in name val update server :" + server + " serverName :" + serverName + " nameValName :" + nameValName + " newValue :" + newValue);
     if(server){
       // db.getCollection('servers').update({name:"test-web1-19"}, {$set: { "nameVals.0.ETC_DIR":"/etcd"}});
       var $set = {};
@@ -38,6 +37,29 @@ Meteor.methods({
       throw new Meteor.Error("nameval-does-not-exist", "This Name Value pair does not exist in the database");
     };
   },
+  nameValRemove: function(serverName, nameValName){    
+    check(Meteor.userId(), String);
+    check(serverName, String);
+    check(nameValName, String);
+    var server = Servers.findOne({name: serverName});
+    console.log("in name val remove server :" + server + " serverName :" + serverName + " nameValName :" + nameValName );
+    if(server){
+      // db.getCollection('servers').update({name:"test-sandbox0-19"},{$unset: {"nameVals.0.ETC_DIR":1}},false,true)
+      var $unset = {};
+      $unset['nameVals.0.' + nameValName] = 1;
+
+//      Servers.update({name: serverName}, {$unset: {"nameVals.0.ETC_DIR":1}}, false, function(error){
+      Servers.update({name: serverName}, { $unset: $unset }, false, function(error){
+        console.log("error:" + error);
+        if(!error){
+          console.log("no error ");
+          return nameValName;
+        }
+      });
+    } else {
+      throw new Meteor.Error("nameval-does-not-exist", "This Name Value pair does not exist in the database");
+    };
+  },  
   serverUpdate: function(serverId, newName){
     check(Meteor.userId(), String);
     check(serverId, String);
