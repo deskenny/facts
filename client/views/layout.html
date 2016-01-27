@@ -1,19 +1,41 @@
 <template name="layout">
-  <h1>Globoforce Facts</h1>
-  <style>
-    .active a {color: black;text-decoration: none;border: 1px solid black}
-  </style>
-  {{#if currentUser}}
+  <header class="dapp-header">
+    <nav>
     <ul>
-      <li class="{{isActiveRoute regex='facts'}}">
-        <a href="/">Facts</a>
+      <li class="block-info dapp-flex-item">        
+        <span> 
+          <img class="logosize" src="favicon.ico" /> Globoforce deployables
+        </span>
       </li>
-      <li class="{{isActiveRoute regex='servers'}}">
-        <a href="/servers">Servers</a>
+
+      {{#if currentUser}}
+      <li class="block-info dapp-flex-item">
+        <i class="icon-layers"></i>
+        <span> 
+          <a href="/" class="{{isActiveRoute regex='send'}}">Facts</a>
+        </span>
       </li>
+      <li class="block-info dapp-flex-item">
+        <i class="icon-docs"></i>
+        <span> 
+          <a href="/servers" class="{{isActiveRoute regex='send'}}"> Servers</a>
+        </span>
+      </li>
+      {{/if}}
+      <li class="block-info dapp-flex-item">        
+        <span> 
+          {{> loginButtons}}
+        </span>
+      </li>
+
     </ul>
-  {{/if}}
+  </nav>
+  </header>    
  
-  {{> loginButtons}}
-  {{> yield}}
+  <div class="dapp-flex-content">
+    <main class="dapp-content">
+    {{> yield}}
+    </main>
+  </div>  
+
 </template>
